@@ -15,11 +15,9 @@ jobs:
     - name: Install third-party libraries
       run: |
         brew update
-        brew install "googletest@${GTEST_VERSION}"
-        export GTEST_PATH="$(brew --prefix googletest)/${GTEST_VERSION}"
+        brew install googletest
+        export GTEST_PATH="$(brew --prefix googletest)/1.11.0"
         echo "::set-env name=GTEST_PATH::$GTEST_PATH"
-      env:
-        GTEST_VERSION: 1.11.0
     - name: Build
       run: |
         ./build_tests.sh
