@@ -6,24 +6,9 @@
 
 enum class ArgumentType { Boolean, Integer, Float, Double, String, Unknown };
 
-class DuplicateArgumentError : public std::runtime_error {
+class ArgumentParserError : public std::runtime_error {
 public:
-    DuplicateArgumentError(const std::string& msg) : std::runtime_error(msg) {}
-};
-
-class UnsetArgumentError : public std::runtime_error {
-public:
-    UnsetArgumentError(const std::string& msg) : std::runtime_error(msg) {}
-};
-
-class InvalidTypeError : public std::runtime_error {
-public:
-    InvalidTypeError(const std::string& msg) : std::runtime_error(msg) {}
-};
-
-class ArgumentParseError : public std::runtime_error {
-public:
-    ArgumentParseError(const std::string& msg) : std::runtime_error(msg) {}
+    ArgumentParserError(const std::string& msg) : std::runtime_error(msg) {}
 };
 
 class ArgumentValueMap {
@@ -71,7 +56,7 @@ private:
     inline void CheckForDuplicateArgument(const std::string& name) {
         if (const auto it = _name_type_map.find(name);
             it != _name_type_map.end()) {
-            throw DuplicateArgumentError(
+            throw ArgumentParserError(
                 "Duplicate name: " + name +
                 " is already used for argument of type " +
                 std::to_string(static_cast<int>(it->second)));
@@ -159,14 +144,14 @@ template <>
 bool ArgumentValueMap::GetArg<bool>(const std::string& name) {
     if (const auto it = _name_type_map.find(name); it != _name_type_map.end()) {
         if (it->second != ArgumentType::Boolean) {
-            throw InvalidTypeError(
+            throw ArgumentParserError(
                 "Attempting to get boolean value from type " +
                 std::to_string(static_cast<int>(it->second)));
         }
     }
 
     if (!_bool_args[name].has_value()) {
-        throw UnsetArgumentError("No value provided for argument: " + name);
+        throw ArgumentParserError("No value provided for argument: " + name);
     }
 
     return _bool_args[name].value();
@@ -176,14 +161,14 @@ template <>
 int ArgumentValueMap::GetArg<int>(const std::string& name) {
     if (const auto it = _name_type_map.find(name); it != _name_type_map.end()) {
         if (it->second != ArgumentType::Integer) {
-            throw InvalidTypeError(
+            throw ArgumentParserError(
                 "Attempting to get integer value from type " +
                 std::to_string(static_cast<int>(it->second)));
         }
     }
 
     if (!_int_args[name].has_value()) {
-        throw UnsetArgumentError("No value provided for argument: " + name);
+        throw ArgumentParserError("No value provided for argument: " + name);
     }
 
     return _int_args[name].value();
@@ -193,14 +178,14 @@ template <>
 float ArgumentValueMap::GetArg<float>(const std::string& name) {
     if (const auto it = _name_type_map.find(name); it != _name_type_map.end()) {
         if (it->second != ArgumentType::Float) {
-            throw InvalidTypeError(
+            throw ArgumentParserError(
                 "Attempting to get float value from type " +
                 std::to_string(static_cast<int>(it->second)));
         }
     }
 
     if (!_float_args[name].has_value()) {
-        throw UnsetArgumentError("No value provided for argument: " + name);
+        throw ArgumentParserError("No value provided for argument: " + name);
     }
 
     return _float_args[name].value();
@@ -210,14 +195,14 @@ template <>
 double ArgumentValueMap::GetArg<double>(const std::string& name) {
     if (const auto it = _name_type_map.find(name); it != _name_type_map.end()) {
         if (it->second != ArgumentType::Double) {
-            throw InvalidTypeError(
+            throw ArgumentParserError(
                 "Attempting to get double value from type " +
                 std::to_string(static_cast<int>(it->second)));
         }
     }
 
     if (!_double_args[name].has_value()) {
-        throw UnsetArgumentError("No value provided for argument: " + name);
+        throw ArgumentParserError("No value provided for argument: " + name);
     }
 
     return _double_args[name].value();
@@ -227,14 +212,14 @@ template <>
 std::string ArgumentValueMap::GetArg<std::string>(const std::string& name) {
     if (const auto it = _name_type_map.find(name); it != _name_type_map.end()) {
         if (it->second != ArgumentType::String) {
-            throw InvalidTypeError(
+            throw ArgumentParserError(
                 "Attempting to get string value from type " +
                 std::to_string(static_cast<int>(it->second)));
         }
     }
 
     if (!_string_args[name].has_value()) {
-        throw UnsetArgumentError("No value provided for argument: " + name);
+        throw ArgumentParserError("No value provided for argument: " + name);
     }
     
     return _string_args[name].value();
@@ -273,12 +258,12 @@ public:
                             } else if (value == "false") {
                                 _argument_value_map.SetArg<bool>(key, false);
                             } else {
-                                throw ArgumentParseError(
+                                throw ArgumentParserError(
                                     "Unable to parse boolean argument: " + key +
                                     " - " + value);
                             }
                         } catch (const std::exception& e) {
-                            throw ArgumentParseError(
+                            throw ArgumentParserError(
                                 "Unable to parse boolean argument: " + key +
                                 " - " + value);
                         }
@@ -288,7 +273,7 @@ public:
                             auto val = std::stoi(value);
                             _argument_value_map.SetArg<int>(key, val);
                         } catch (const std::exception& e) {
-                            throw ArgumentParseError(
+                            throw ArgumentParserError(
                                 "Unable to parse integer argument: " + key +
                                 " - " + value);
                         }
@@ -298,7 +283,7 @@ public:
                             auto val = std::stof(value);
                             _argument_value_map.SetArg<float>(key, val);
                         } catch (const std::exception& e) {
-                            throw ArgumentParseError(
+                            throw ArgumentParserError(
                                 "Unable to parse float argument: " + key +
                                 " - " + value);
                         }
@@ -308,7 +293,7 @@ public:
                             auto val = std::stod(value);
                             _argument_value_map.SetArg<double>(key, val);
                         } catch (const std::exception& e) {
-                            throw ArgumentParseError(
+                            throw ArgumentParserError(
                                 "Unable to parse double argument: " + key +
                                 " - " + value);
                         }
