@@ -47,3 +47,4 @@ See [example](example) for an example executable. Build it with [build_example.s
 - [ ] '--' prefix to denote positional arguments
 - [ ] [Github actions + googletest](https://github.com/bastianhjaeger/github_actions_gtest_example)
 - [ ] Documentation (doxygen)
+- [ ] Try out std::variant
