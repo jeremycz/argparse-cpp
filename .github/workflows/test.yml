@@ -16,10 +16,9 @@ jobs:
       run: |
         brew update
         brew install googletest
-        export GTEST_PATH="$(brew --prefix googletest)/1.11.0"
-        echo "::set-env name=GTEST_PATH::$GTEST_PATH"
     - name: Build
       run: |
+        export GTEST_PATH="$(brew --prefix googletest)/1.11.0"
         ./build_tests.sh
     - name: Run tests
       run: |

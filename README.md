@@ -1,5 +1,7 @@
 # argparse-cpp
 
+![build](https://github.com/jeremycz/argparse-cpp/actions/workflows/test.yml/badge.svg)
+
 A C++17 header-only command line argument parser for C++.
 
 ## Usage
