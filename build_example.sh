@@ -1,3 +1,8 @@
 #!/usr/bin/env bash
-cd example
-g++ -std=c++17 -I../include -o example.app example.cpp
+set -e
+
+SRC="example"
+
+g++ -std=c++17 \
+    -Iinclude \
+    -o "${SRC}/example.app" "${SRC}/example.cpp"

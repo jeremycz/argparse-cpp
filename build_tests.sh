@@ -1,11 +1,18 @@
 #!/usr/bin/env bash
-cd test
+set -e
 
-GTEST_PATH="/opt/homebrew/Cellar/googletest/1.11.0"
+THIRD_PARTY="third_party.txt"
+SRC="test"
+
+# Set environment variables in third_party.txt
+export $(grep -v '^#' ${THIRD_PARTY} | xargs)
 
 g++ -std=c++17 \
-    -I../include \
-    -I"$GTEST_PATH/include" \
-    -L"$GTEST_PATH/lib" \
+    -Iinclude \
+    -I"${GTEST_PATH}/include" \
+    -L"${GTEST_PATH}/lib" \
     -lgtest \
-    -o test.app main.cpp
+    -o "${SRC}/test.app" "${SRC}/main.cpp"
+
+# Unset all environment variables previously set by third_party.txt
+unset $(grep -v '^#' ${THIRD_PARTY} | sed -E 's/(.*)=.*/\1/' | xargs)
