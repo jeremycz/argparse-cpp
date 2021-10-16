@@ -31,3 +31,10 @@ Retrieve argument values.
 ```cpp
 float float_value = args.GetArg<float>("name");
 ```
+
+## To-Do
+
+- [] Positional arguments
+- [] Arguments as flags
+- [] Shorthand keyword arguments
+- [] '--' prefix to denote positional arguments
