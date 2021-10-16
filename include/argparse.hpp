@@ -252,7 +252,7 @@ public:
 
     template <typename T>
     void AddArgument(const std::string& name, const T& default_value) {
-        _argument_value_map.CreateArg<T>(name, std::optional<T>(default_value));
+        _argument_value_map.CreateArg<T>(name, default_value);
     };
 
     ArgumentValueMap ParseArguments(const int argc, char* argv[]) {
