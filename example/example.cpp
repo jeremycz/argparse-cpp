@@ -1,7 +1,7 @@
 #include <chrono>
 #include <iostream>
 
-#include "../include/argparse.hpp"
+#include "argparse.hpp"
 
 int main(int argc, char* argv[]) {
     auto t0 = std::chrono::high_resolution_clock::now();
