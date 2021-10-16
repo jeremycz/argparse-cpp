@@ -1,0 +1,28 @@
+name: Build and test on macOS
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: macos-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+    - name: Install third-party libraries
+      run: |
+        brew update
+        brew install "googletest@${GTEST_VERSION}"
+        export GTEST_PATH="$(brew --prefix googletest)/${GTEST_VERSION}"
+        echo "::set-env name=GTEST_PATH::$GTEST_PATH"
+      env:
+        GTEST_VERSION=1.11.0
+    - name: Build
+      run: |
+        ./build_tests.sh
+    - name: Run tests
+      run: |
+        ./test/test.app
