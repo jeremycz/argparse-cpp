@@ -34,7 +34,8 @@ float float_value = args.GetArg<float>("name");
 
 ## To-Do
 
-- [] Positional arguments
-- [] Arguments as flags
-- [] Shorthand keyword arguments
-- [] '--' prefix to denote positional arguments
+- [ ] Positional arguments
+- [ ] Arguments as flags
+- [ ] Shorthand keyword arguments
+- [ ] '--' prefix to denote positional arguments
+- [ ] [Github actions + googletest](https://github.com/bastianhjaeger/github_actions_gtest_example)
