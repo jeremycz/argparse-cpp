@@ -1,0 +1,25 @@
+name: Build and test on macOS
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: macos-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+    - name: Install third-party libraries
+      run: |
+        brew update
+        brew install googletest
+    - name: Build
+      run: |
+        export GTEST_PATH="$(brew --prefix googletest)/1.11.0"
+        ./build_tests.sh
+    - name: Run tests
+      run: |
+        ./test/test.app

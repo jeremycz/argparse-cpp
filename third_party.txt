@@ -1,0 +1,1 @@
+GTEST_PATH="/opt/homebrew/Cellar/googletest/1.11.0"

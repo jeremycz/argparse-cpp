@@ -1,10 +1,8 @@
 # argparse-cpp
 
-A header-only command line argument parser for C++.
+![build](https://github.com/jeremycz/argparse-cpp/actions/workflows/test.yml/badge.svg)
 
-## Requirements
-
-- C++17
+A C++17 header-only command line argument parser for C++.
 
 ## Usage
 
@@ -32,6 +30,17 @@ Retrieve argument values.
 float float_value = args.GetArg<float>("name");
 ```
 
+### Example app
+
+See [example](example) for an example executable. Build it with [build_example.sh](build_example.sh).
+
+## Development
+
+### Tests
+
+- Install googletest (tested with v1.11.0)
+- Set GTEST_PATH variable in [third_party.txt](third_party.txt)
+
 ## To-Do
 
 - [ ] Positional arguments
@@ -40,3 +49,4 @@ float float_value = args.GetArg<float>("name");
 - [ ] '--' prefix to denote positional arguments
 - [ ] [Github actions + googletest](https://github.com/bastianhjaeger/github_actions_gtest_example)
 - [ ] Documentation (doxygen)
+- [ ] Try out std::variant
